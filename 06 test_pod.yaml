@@ -12,6 +12,13 @@ spec:
           ports:
           - containerPort: 8080
             protocol: TCP
+          resources:
+          requests:
+            memory: "512Mi"
+            cpu: "200m"
+          limits:
+            memory: "1024Mi"
+            cpu: "1000m"
           securityContext:
             runAsUser: 1000
             privileged: false
