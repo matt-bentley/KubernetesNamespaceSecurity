@@ -1,17 +1,20 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx-test
+  name: "web-test"
 spec:
-  containers:
-    - name:  nginx-test
-      image: nginx
-      resources:
-        requests:
-          memory: "512Mi"
-          cpu: "200m"
-        limits:
-          memory: "1024Mi"
-          cpu: "1000m"
-      securityContext:
-        privileged: false
+      containers:
+        - image: "mcr.microsoft.com/dotnet/core/samples:aspnetapp"
+          name: api-test
+          env:
+            - name: ASPNETCORE_URLS
+              value: "http://+:8080"
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          securityContext:
+            runAsUser: 1000
+            privileged: false
+            allowPrivilegeEscalation: false
+            capabilities:
+              add: ["SYS_TIME"]
